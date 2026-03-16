@@ -1,0 +1,24 @@
+# Ambientes virtuales
+venv/
+env/
+.env
+
+# Archivos compilados de Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Bases de datos locales
+*.db
+*.sqlite3
+
+# Logs
+*.log
+
+# Carpetas y archivos temporales de sistema y editores
+.vscode/
+.idea/
+.DS_Store
+*.swp
+tmp/
+.gemini/
