@@ -7,7 +7,11 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-SECRET_KEY = os.getenv("JWT_SECRET_KEY", "super-secret-default-key")
+# Obtener clave y asegurar que tiene al menos 32 bytes para SHA256
+SECRET_KEY = os.getenv("JWT_SECRET_KEY", "super-secret-default-key-for-lumenai-monitoring")
+if len(SECRET_KEY) < 32:
+    SECRET_KEY = SECRET_KEY.ljust(32, "x")
+
 ALGORITHM = "HS256"
 
 security = HTTPBearer()

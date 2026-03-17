@@ -16,6 +16,7 @@ class Metric(Base):
     __tablename__ = "metrics"
 
     id = Column(Integer, primary_key=True, index=True)
+    hostname = Column(String, index=True, default="Unknown")
     timestamp = Column(DateTime, default=datetime.utcnow)
     cpu_percent = Column(Float)
     memory_percent = Column(Float)
@@ -26,11 +27,34 @@ class Alert(Base):
     __tablename__ = "alerts"
 
     id = Column(Integer, primary_key=True, index=True)
+    hostname = Column(String, index=True, default="Unknown")
     timestamp = Column(DateTime, default=datetime.utcnow)
     issue_detected = Column(String)
     root_cause = Column(Text)
     recommendations = Column(Text) # JSON de las recomendaciones
     raw_metrics = Column(Text)
+
+class PendingAnalysis(Base):
+    __tablename__ = "pending_analyses"
+
+    id = Column(Integer, primary_key=True, index=True)
+    hostname = Column(String, index=True)
+    timestamp = Column(DateTime, default=datetime.utcnow)
+    metrics_json = Column(Text)
+    logs_text = Column(Text)
+    status = Column(String, default="pending") # pending, approved, rejected
+
+class NetworkConnection(Base):
+    __tablename__ = "network_connections"
+
+    id = Column(Integer, primary_key=True, index=True)
+    hostname = Column(String, index=True)
+    local_address = Column(String)
+    remote_address = Column(String, nullable=True)
+    status = Column(String)
+    protocol = Column(String) # TCP, UDP
+    pid = Column(Integer, nullable=True)
+    timestamp = Column(DateTime, default=datetime.utcnow)
 
 # Crea las tablas si no existen
 Base.metadata.create_all(bind=engine)
